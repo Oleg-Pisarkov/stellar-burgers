@@ -35,7 +35,7 @@ export const orderBurger = createAsyncThunk(
 );
 
 export const constructorSlice = createSlice({
-  name: 'constructor',
+  name: 'BurgerConstructor',
   initialState,
   reducers: {
     addIngredient: (state, action) => {

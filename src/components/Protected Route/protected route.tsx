@@ -11,7 +11,7 @@ type TProtectedRoute = {
 export const ProtectedRoute = ({ onlyUnAuth, children }: TProtectedRoute) => {
   const isAuthChecked = useSelector(getUserState).isAuthChecked;
   const isAuthenticated = useSelector(getUserState).isAuthenticated;
-  const user = useSelector(getUserState).user;
+  //const user = useSelector(getUserState).userData
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -19,12 +19,12 @@ export const ProtectedRoute = ({ onlyUnAuth, children }: TProtectedRoute) => {
     return <Preloader />;
   }
 
-  if (!onlyUnAuth && !user) {
+  if (!onlyUnAuth && !isAuthenticated) {
     //  если маршрут для авторизованного пользователя, но пользователь неавторизован, то делаем редирект
     return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
-  if (onlyUnAuth && user) {
+  if (onlyUnAuth && isAuthenticated) {
     //  если маршрут для неавторизованного пользователя, но пользователь авторизован
     // при обратном редиректе  получаем данные о месте назначения редиректа из объекта location.state
     // в случае если объекта location.state?.from нет — а такое может быть , если мы зашли на страницу логина по прямому URL

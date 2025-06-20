@@ -12,11 +12,11 @@ import { orderSlice } from './slices/orderSlice';
 import { userSlice } from './slices/userSlice';
 
 export const rootReducer = combineReducers({
-  constructor: constructorSlice.reducer,
+  BurgerConstructor: constructorSlice.reducer,
   feed: feedSlice.reducer,
   ingredient: ingredientSlice.reducer,
   order: orderSlice.reducer,
-  user: userSlice.reducer
+  userSlice: userSlice.reducer
 });
 
 const store = configureStore({
