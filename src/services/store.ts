@@ -11,13 +11,12 @@ import { ingredientSlice } from './slices/ingredientSlice';
 import { orderSlice } from './slices/orderSlice';
 import { userSlice } from './slices/userSlice';
 
-
 export const rootReducer = combineReducers({
   constructor: constructorSlice.reducer,
   feed: feedSlice.reducer,
   ingredient: ingredientSlice.reducer,
   order: orderSlice.reducer,
-  user: userSlice.reducer,
+  user: userSlice.reducer
 });
 
 const store = configureStore({
@@ -33,4 +32,3 @@ export const useDispatch: () => AppDispatch = () => dispatchHook();
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export default store;
-

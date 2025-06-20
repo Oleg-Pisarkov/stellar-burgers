@@ -1,23 +1,25 @@
-import { getOrderByNumberApi } from "@api";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TOrder } from "@utils-types"
-
+import { getOrderByNumberApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder } from '@utils-types';
 
 type TOrderState = {
-  order: TOrder[],
-  orderByNumber: TOrder | null,
-  orderResponse: TOrder | null,
-  orderRequest: boolean,
+  order: TOrder[];
+  orderByNumber: TOrder | null;
+  orderResponse: TOrder | null;
+  orderRequest: boolean;
 };
 
 export const initialState: TOrderState = {
-  order:[],
+  order: [],
   orderByNumber: null,
   orderResponse: null,
-  orderRequest: false,
+  orderRequest: false
 };
 
-export const getOrderByNumber = createAsyncThunk('order/getOrderByNumber', async (number: number) => await getOrderByNumberApi(number));
+export const getOrderByNumber = createAsyncThunk(
+  'order/getOrderByNumber',
+  async (number: number) => await getOrderByNumberApi(number)
+);
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -38,5 +40,8 @@ export const orderSlice = createSlice({
       .addCase(getOrderByNumber.rejected, (state) => {
         state.orderRequest = false;
       });
-  },
+  }
 });
+
+export const { getOrderState } = orderSlice.selectors;
+export default orderSlice.reducer;

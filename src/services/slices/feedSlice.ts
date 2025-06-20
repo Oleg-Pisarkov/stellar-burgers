@@ -1,15 +1,13 @@
-import { getFeedsApi } from "@api";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TOrder } from "@utils-types"
-
-
+import { getFeedsApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder } from '@utils-types';
 
 type TFeedState = {
-  orders: TOrder[],
-  total: number
-  totalToday: number,
-  loading: boolean
-  error: string | null
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+  loading: boolean;
+  error: string | null;
 };
 
 export const initialState: TFeedState = {
@@ -17,10 +15,13 @@ export const initialState: TFeedState = {
   total: 0,
   totalToday: 0,
   loading: false,
-  error: null,
+  error: null
 };
 
-export const getFeeds = createAsyncThunk('feed/getFeeds', async () => await getFeedsApi());
+export const getFeeds = createAsyncThunk(
+  'feed/getFeeds',
+  async () => await getFeedsApi()
+);
 
 export const feedSlice = createSlice({
   name: 'feed',
@@ -46,8 +47,8 @@ export const feedSlice = createSlice({
         state.loading = false;
         state.error = action.error.message as string;
       });
-    }
-  });
+  }
+});
 
-  export const { getFeedState } = feedSlice.selectors;
-  export default feedSlice.reducer;
+export const { getFeedState } = feedSlice.selectors;
+export default feedSlice.reducer;
