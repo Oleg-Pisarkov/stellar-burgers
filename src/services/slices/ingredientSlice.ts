@@ -16,7 +16,7 @@ export const initialState: TIngredientState = {
 
 export const getIngredients = createAsyncThunk(
   'ingredient/getIngredients',
-  async () => await getIngredientsApi()
+  async () => getIngredientsApi()
 );
 
 export const ingredientSlice = createSlice({
@@ -24,27 +24,32 @@ export const ingredientSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    getIngredientsState: (state: TIngredientState) => state
+    // getIngredientsState: (state) => state
+    selectIngredients: (state: TIngredientState) => state.ingredients,
+    selectLoading: (state: TIngredientState) => state.loading,
+    selectError: (state: TIngredientState) => state.error
   },
   extraReducers: (builder) => {
     builder
-      /*
       .addCase(getIngredients.pending, (state) => {
         state.loading = true;
         state.error = null;
-      })
-        */
-      .addCase(getIngredients.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.ingredients = action.payload;
+        console.log(state.error);
       })
       .addCase(getIngredients.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message as string;
+        console.log(state.error);
+      })
+      .addCase(getIngredients.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.ingredients = action.payload;
+        console.log(state.ingredients);
       });
   }
 });
 
-export const { getIngredientsState } = ingredientSlice.selectors;
+export const { selectIngredients, selectLoading, selectError } =
+  ingredientSlice.selectors;
 export default ingredientSlice.reducer;

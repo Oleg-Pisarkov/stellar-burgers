@@ -4,7 +4,7 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredientsState } from '../../services/slices/ingredientSlice';
+import { selectIngredients } from '../../services/slices/ingredientSlice';
 import {
   getOrderByNumber,
   getOrderState
@@ -24,7 +24,7 @@ export const OrderInfo: FC = () => {
   };
 */
   const number = Number(useParams().number);
-  const { ingredients } = useSelector(getIngredientsState);
+  const ingredients = useSelector(selectIngredients);
   const { orderByNumber, orderRequest } = useSelector(getOrderState);
   const dispatch: AppDispatch = useDispatch();
 

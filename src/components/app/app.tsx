@@ -50,9 +50,8 @@ function App() {
         <Route
           path='/ingredients/:id'
           element={
-            <Modal title='123' onClose={history.back}>
-              {' '}
-              <IngredientDetails />{' '}
+            <Modal title={'Детали ингредиента'} onClose={history.back}>
+              <IngredientDetails />
             </Modal>
           }
         />
