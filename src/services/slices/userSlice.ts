@@ -103,26 +103,15 @@ export const userSlice = createSlice({
         state.isAuthenticated = true;
         state.userData = action.payload.user;
       })
-      /*
       .addCase(getUser.pending, (state) => {
         state.isAuthChecked = true;
         state.isAuthenticated = true;
         state.success = true;
       })
-        */
       .addCase(getUser.rejected, (state, action) => {
         state.isAuthChecked = false;
         state.isAuthenticated = false;
       })
-      /*
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.isAuthChecked = false;
-        state.isAuthenticated = true;
-        //state.user = action.payload.user;
-        state.user = {
-        ...action.payload.user} 
-      })
-      */
       .addCase(getUser.fulfilled, (state, action) => {
         state.isAuthChecked = false;
         state.isAuthenticated = true;
@@ -130,7 +119,6 @@ export const userSlice = createSlice({
           ...action.payload.user
         };
       })
-
       .addCase(getOrders.fulfilled, (state, action) => {
         state.userOrders = action.payload;
       })

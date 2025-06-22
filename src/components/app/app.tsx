@@ -58,7 +58,10 @@ function App() {
         <Route
           path='/profile/orders/:number'
           element={
-            <Modal title='123' onClose={history.back}>
+            <Modal
+              title='`#${location.pathname.split(/\d+/)}`'
+              onClose={history.back}
+            >
               {' '}
               <OrderInfo />{' '}
             </Modal>
