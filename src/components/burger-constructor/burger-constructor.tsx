@@ -21,28 +21,21 @@ export const BurgerConstructor: FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
   if (!constructorItems) {
-    return null; // или <Loading /> компонент
+    return null;
   }
 
   let arr: string[] = [];
-  /*
-  const ingredients =
-    constructorItems?.ingredients?.map((item) => item.id) || [];
-    */
 
   const ingredients: string[] | void = constructorItems.ingredients.map(
-    (item) => item.id
+    (item) => item._id
   );
 
   if (constructorItems.bun) {
-    arr = [...arr, constructorItems.bun._id];
-  }
-  if (ingredients) {
-    arr = [...arr, ...ingredients];
+    const bun = constructorItems.bun._id;
+    arr = [bun, ...ingredients, bun];
   }
 
   const onOrderClick = () => {
-    // if (!constructorItems.bun || orderRequest) return;
     if (isAuth && constructorItems.bun && !orderRequest) {
       dispatch(setRequest(true));
       dispatch(orderBurger(arr));

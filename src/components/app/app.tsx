@@ -11,17 +11,20 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from '../../services/slices/userSlice';
 import { AppDispatch } from 'src/services/store';
 import { getIngredients } from '../../services/slices/ingredientSlice';
+import { ProtectedRoute } from '../Protected Route/protected route';
 
 function App() {
   const location = useLocation();
-  const backgroundLocation = location.state?.backgroundLocation;
+  const navigate = useNavigate();
+
+  const backgroundLocation = location.state;
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -35,46 +38,91 @@ function App() {
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
+
         <Route
-          path='/feed/:number'
-          element={
-            <Modal
-              title={`${location.pathname.split('/feed/')[1]}`}
-              onClose={history.back}
-            >
-              {' '}
-              <OrderInfo />{' '}
-            </Modal>
-          }
+          path='/login'
+          element={<ProtectedRoute children={<Login />} onlyUnAuth />}
         />
         <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title={'Детали ингредиента'} onClose={history.back}>
-              <IngredientDetails />
-            </Modal>
-          }
+          path='/register'
+          element={<ProtectedRoute children={<Register />} onlyUnAuth />}
         />
         <Route
-          path='/profile/orders/:number'
+          path='/forgot-password'
+          element={<ProtectedRoute children={<ForgotPassword />} onlyUnAuth />}
+        />
+        <Route
+          path='/profile'
+          element={<ProtectedRoute children={<Profile />} onlyUnAuth={false} />}
+        />
+        <Route
+          path='/profile/orders'
           element={
-            <Modal
-              title='`#${location.pathname.split(/\d+/)}`'
-              onClose={history.back}
-            >
-              {' '}
-              <OrderInfo />{' '}
-            </Modal>
+            <ProtectedRoute children={<ProfileOrders />} onlyUnAuth={false} />
           }
         />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
+
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
+
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title={`${location.pathname.split('/feed/')[1]}`}
+                onClose={() => navigate(-1)}
+              >
+                {' '}
+                <OrderInfo />{' '}
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title={'Детали ингредиента'} onClose={() => navigate(-1)}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders'
+            element={
+              <ProtectedRoute
+                children={
+                  <Modal
+                    title={'Детали ингредиента'}
+                    onClose={() => navigate(-1)}
+                  >
+                    <ProfileOrders />
+                  </Modal>
+                }
+                onlyUnAuth
+              />
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute
+                children={
+                  <Modal
+                    title={`${location.pathname.split('/feed/')[1]}`}
+                    onClose={() => navigate(-1)}
+                  >
+                    <OrderInfo />
+                  </Modal>
+                }
+                onlyUnAuth
+              />
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }

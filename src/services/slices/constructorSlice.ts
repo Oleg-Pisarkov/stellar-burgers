@@ -42,17 +42,13 @@ export const constructorSlice = createSlice({
       if (action.payload.type === 'bun') {
         state.constructorItems.bun = action.payload;
       } else {
-        state.constructorItems.ingredients = [
-          ...state.constructorItems.ingredients,
-          action.payload
-        ];
+        state.constructorItems.ingredients.push({
+          ...action.payload,
+          id: nanoid()
+        });
       }
     },
-    getId: (ingredient) => {
-      const id = nanoid();
-      return { ...ingredient, id };
-      //return { payload: { ...ingredient, id } }
-    },
+
     removeIngredient: (state, action) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(

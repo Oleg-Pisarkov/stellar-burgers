@@ -15,9 +15,6 @@ export const BurgerIngredients: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const ingredients = useSelector(selectIngredients);
 
-  //if (!ingredients) return <div>Данные не загружены</div>;
-  //if (ingredients.length === 0) return <div>Массив пустой</div>;
-
   const buns = ingredients.filter((item) => item.type === 'bun');
   const mains = ingredients.filter((item) => item.type === 'main');
   const sauces = ingredients.filter((item) => item.type === 'sauce');

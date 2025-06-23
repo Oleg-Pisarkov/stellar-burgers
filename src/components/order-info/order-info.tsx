@@ -12,17 +12,6 @@ import {
 import { AppDispatch } from 'src/services/store';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  /* const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
-*/
   const number = Number(useParams().number);
   const ingredients = useSelector(selectIngredients);
   const { orderByNumber, orderRequest } = useSelector(getOrderState);
@@ -32,7 +21,6 @@ export const OrderInfo: FC = () => {
     dispatch(getOrderByNumber(number));
   }, []);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderByNumber || !ingredients.length) return null;
 
