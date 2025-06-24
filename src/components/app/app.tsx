@@ -57,7 +57,9 @@ function App() {
         />
         <Route
           path='/profile/orders'
-          element={<ProtectedRoute children={<ProfileOrders />} onlyUnAuth />}
+          element={
+            <ProtectedRoute children={<ProfileOrders />} onlyUnAuth={false} />
+          }
         />
 
         <Route path='/reset-password' element={<ResetPassword />} />
@@ -99,7 +101,7 @@ function App() {
                     <ProfileOrders />
                   </Modal>
                 }
-                onlyUnAuth={false}
+                onlyUnAuth
               />
             }
           />

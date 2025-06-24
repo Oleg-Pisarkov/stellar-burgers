@@ -87,8 +87,6 @@ export const userSlice = createSlice({
         state.userData = action.payload.user;
         state.isAuthChecked = true;
         state.isAuthenticated = true;
-        console.log(state.isAuthChecked);
-        console.log(state.isAuthenticated);
       })
       .addCase(loginUser.pending, (state) => {
         state.isAuthChecked = true;
@@ -106,22 +104,17 @@ export const userSlice = createSlice({
       .addCase(getUser.pending, (state) => {
         state.isAuthChecked = true;
         state.isAuthenticated = true;
-        state.success = true;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isAuthChecked = false;
         state.isAuthenticated = false;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.isAuthChecked = true;
+        state.isAuthChecked = false;
         state.isAuthenticated = true;
         state.userData = {
           ...action.payload.user
         };
-      })
-      .addCase(getOrders.pending, (state, action) => {
-        console.log(state.isAuthChecked);
-        console.log(state.isAuthenticated);
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.userOrders = action.payload;
