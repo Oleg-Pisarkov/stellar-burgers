@@ -24,7 +24,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const backgroundLocation = location.state;
+  const locationState = location.state;
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes location={backgroundLocation || location}>
+      <Routes location={locationState?.background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
 
@@ -57,9 +57,7 @@ function App() {
         />
         <Route
           path='/profile/orders'
-          element={
-            <ProtectedRoute children={<ProfileOrders />} onlyUnAuth={false} />
-          }
+          element={<ProtectedRoute children={<ProfileOrders />} onlyUnAuth />}
         />
 
         <Route path='/reset-password' element={<ResetPassword />} />
@@ -67,7 +65,7 @@ function App() {
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
-      {backgroundLocation && (
+      {locationState?.background && (
         <Routes>
           <Route
             path='/feed/:number'
@@ -101,7 +99,7 @@ function App() {
                     <ProfileOrders />
                   </Modal>
                 }
-                onlyUnAuth
+                onlyUnAuth={false}
               />
             }
           />
@@ -111,13 +109,13 @@ function App() {
               <ProtectedRoute
                 children={
                   <Modal
-                    title={`${location.pathname.split('/feed/')[1]}`}
+                    title={`${location.pathname.split('/profile/orders/')[1]}`}
                     onClose={() => navigate(-1)}
                   >
                     <OrderInfo />
                   </Modal>
                 }
-                onlyUnAuth
+                onlyUnAuth={false}
               />
             }
           />

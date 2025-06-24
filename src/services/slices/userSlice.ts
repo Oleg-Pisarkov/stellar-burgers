@@ -87,6 +87,8 @@ export const userSlice = createSlice({
         state.userData = action.payload.user;
         state.isAuthChecked = true;
         state.isAuthenticated = true;
+        console.log(state.isAuthChecked);
+        console.log(state.isAuthenticated);
       })
       .addCase(loginUser.pending, (state) => {
         state.isAuthChecked = true;
@@ -116,6 +118,10 @@ export const userSlice = createSlice({
         state.userData = {
           ...action.payload.user
         };
+      })
+      .addCase(getOrders.pending, (state, action) => {
+        console.log(state.isAuthChecked);
+        console.log(state.isAuthenticated);
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.userOrders = action.payload;
