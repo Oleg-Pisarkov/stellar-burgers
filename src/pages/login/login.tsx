@@ -10,7 +10,6 @@ export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { isAuthenticated } = useSelector(getUserState);
   const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -20,10 +19,6 @@ export const Login: FC = () => {
     }
     dispatch(loginUser({ email, password }));
   };
-
-  if (isAuthenticated) {
-    return <Navigate to={'/'} />;
-  }
 
   return (
     <LoginUI
