@@ -1,33 +1,36 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIngredients } from '../../services/slices/ingredientSlice';
+import {
+  getOrderByNumber,
+  getOrderState
+} from '../../services/slices/orderSlice';
+import { AppDispatch } from 'src/services/store';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const number = Number(useParams().number);
+  const ingredients = useSelector(selectIngredients);
+  const { orderByNumber, orderRequest } = useSelector(getOrderState);
+  const dispatch: AppDispatch = useDispatch();
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    dispatch(getOrderByNumber(number));
+  }, []);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!orderByNumber || !ingredients.length) return null;
 
-    const date = new Date(orderData.createdAt);
+    const date = new Date(orderByNumber.createdAt);
 
     type TIngredientsWithCount = {
       [key: string]: TIngredient & { count: number };
     };
 
-    const ingredientsInfo = orderData.ingredients.reduce(
+    const ingredientsInfo = orderByNumber.ingredients.reduce(
       (acc: TIngredientsWithCount, item) => {
         if (!acc[item]) {
           const ingredient = ingredients.find((ing) => ing._id === item);
@@ -52,12 +55,12 @@ export const OrderInfo: FC = () => {
     );
 
     return {
-      ...orderData,
+      ...orderByNumber,
       ingredientsInfo,
       date,
       total
     };
-  }, [orderData, ingredients]);
+  }, [orderByNumber, ingredients]);
 
   if (!orderInfo) {
     return <Preloader />;
