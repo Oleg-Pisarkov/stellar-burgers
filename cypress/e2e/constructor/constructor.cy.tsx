@@ -78,11 +78,15 @@ describe('Оформление заказа', () => {
       'accessToken',
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWE5NGI0OTQzZWFjMDAxY2MzYmMxNCIsImlhdCI6MTc1MTYyMTYzNCwiZXhwIjoxNzUxNjIyODM0fQ.OTTP4Re4Tpgs9LTIFVOX0gY3s0hEF2U0ipYg5JY8mzg'
     );
+    cy.setCookie('accessToken', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWE5NGI0OTQzZWFjMDAxY2MzYmMxNCIsImlhdCI6MTc1MTYyMTYzNCwiZXhwIjoxNzUxNjIyODM0fQ.OTTP4Re4Tpgs9LTIFVOX0gY3s0hEF2U0ipYg5JY8mzg');
+    cy.setCookie('refreshToken', '7b2a5c4a893d357243c8b22cf620bad9501407c43d7ed19996e86070e01f9e724469a54be7fe46e0');
   });
 
   afterEach(() => {
     window.localStorage.removeItem('refreshToken');
     window.localStorage.removeItem('accessToken');
+    cy.clearCookie('accessToken');
+    cy.clearCookie('refreshToken');
   });
 
   describe('Проверка данных пользователя', () => {
